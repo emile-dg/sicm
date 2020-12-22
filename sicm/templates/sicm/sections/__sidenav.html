@@ -1,0 +1,68 @@
+<!-- Sidebar -->
+<ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+
+    <!-- Sidebar - Brand -->
+    <a class="sidebar-brand d-flex align-items-center justify-content-center" 
+        href="{{url_for('home')}}">
+        <!-- <div class="sidebar-brand-text my-3">Institut Universitaire des Technologies</div> -->
+        <div class="sidebar-brand-text my-3">IUT - Douala</div>
+    </a>
+
+    <!-- Divider -->
+    <hr class="sidebar-divider my-0">
+
+    <!-- Nav Item - Dashboard -->
+    <li class="nav-item">
+        <a class="nav-link" href="{{url_for('home')}}">
+            <i class="fas fa-fw fa-home"></i>
+            <span>Acceuil</span></a>
+    </li>
+
+    <!-- Divider -->
+    <hr class="sidebar-divider">
+
+    <li class="nav-item">
+        <a class="nav-link" href="{{url_for('employees')}}">
+            <i class="fas fa-fw fa-users"></i>
+            <span>Employes</span>
+        </a>
+    </li>
+    
+    <li class="nav-item">
+        <a class="nav-link" href="{{url_for('terminals')}}">
+            <i class="fas fa-fw fa-terminal"></i>
+            <span>Terminales</span>
+        </a>
+    </li>
+ 
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#activities"
+            aria-expanded="true" aria-controls="activities">
+            <i class="fas fa-fw fa-list"></i>
+            <span>Activites</span>
+        </a>
+        <div id="activities" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <a class="collapse-item" href="{{url_for('activity_listing')}}">
+                    Tout voir
+                </a>
+                <a class="collapse-item" href="{{url_for('activity_listing', status=0)}}">
+                    Les entrees
+                </a>
+                <a class="collapse-item" href="{{url_for('activity_listing', status=1)}}">
+                    Les sorties
+                </a>
+            </div>
+        </div>
+    </li>
+
+    <!-- Divider -->
+    <hr class="sidebar-divider d-none d-md-block">
+
+    <!-- Sidebar Toggler (Sidebar) -->
+    <div class="text-center d-none d-md-inline">
+        <button class="rounded-circle border-0" id="sidebarToggle"></button>
+    </div>
+
+</ul>
+<!-- End of Sidebar -->
