@@ -20,6 +20,11 @@ class Employee(db.Model):
         return f"<Employee {self.first_name} {self.last_name}>"
 
 
+    @property
+    def full_name(self):
+        return " ".join((self.first_name.capitalize(), self.last_name.upper()))
+
+
 class Terminal(db.Model):
     matricule = db.Column(db.String(10), primary_key=True)
     location = db.Column(db.String(35))    
