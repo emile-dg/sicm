@@ -16,11 +16,11 @@ def verify_terminal(matricule):
 def add_new_activity(t_matricule, e_matricule):
     last_updates = [act for act in Activity.query.filter_by(employee_matricule=e_matricule).all() 
                         if act.date.date()==datetime.now().date()]
-    last_update = last_updates[0] if last_updates else None # get the last update for the employee during that day
+    last_update = last_updates[-1] if last_updates else None # get the last update for the employee during that day
     if last_update:
         status = 0 if last_update.status == 1 else 1
     else:
-        status = 0
+        status = 0 # default
     activity = Activity(status=status, employee_matricule=e_matricule, terminal_matricule=t_matricule)
     db.session.add(activity)
     try:

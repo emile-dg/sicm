@@ -191,11 +191,7 @@ def add_activity():
     if terminal_matrcule and employee_matricule:
         if verify_terminal(terminal_matrcule):
             if verify_employee(employee_matricule):
-                status = request.form.get('status')
-                if status:
-                    return add_new_activity(terminal_matrcule, employee_matricule, status)
-                else:
-                    return "Missing Status", 404
+                return add_new_activity(terminal_matrcule, employee_matricule)
             else:
                 return "Invalid Employee", 404
         else:
