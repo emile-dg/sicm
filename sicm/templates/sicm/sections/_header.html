@@ -1,0 +1,49 @@
+<header class="header">
+
+    <div class="header__section header_top">
+        <div class="logo_wrapper">
+            <img src="#" alt="SICM" class="logo_wrapper__img">
+        </div>
+        <div class="title_wrapper">
+            <h1 class="title_wrapper__title">SICM</h1>
+        </div>
+        <div class="options_wrapper">
+            <a href="{{ url_for('logout') }}" class="options_wrapper__action button button--danger button--special"> <i
+                    class="icofont-power"></i> <span>Deconnecter</span></a>
+        </div>
+    </div>
+
+    <nav class="header__section primary_nav">
+        <a href="{{ url_for('home') }}" class="primary_nav__item {% if page_index == 0 %}primary_nav__item--active {% endif %}"> 
+            <i class="icofont-home"></i> 
+            Acceuil
+        </a>
+        <a href="{{ url_for('employees') }}" class="primary_nav__item {% if page_index == 1 %}primary_nav__item--active {% endif %}"> 
+            <i class="icofont-users-alt-5"></i> 
+            Employes
+        </a>
+        <a href="{{ url_for('terminals') }}" class="primary_nav__item {% if page_index == 2 %}primary_nav__item--active {% endif %}"> 
+            <i class="icofont-ui-social-link"></i> 
+            Terminales
+        </a>
+        <a href="{{ url_for('activity_listing') }}" class="primary_nav__item {% if page_index == 3 %}primary_nav__item--active {% endif %} "> 
+            <i class="icofont-list"></i> 
+            Activites
+        </a>
+    </nav>
+
+    {% if page_index == 3 %}
+        <nav class="header__section secondary_nav">
+            <a href="{{ url_for('activity_listing') }}" class="secondary_nav__item {% if status == -1 %}secondary_nav__item--active{% endif %}">
+                Tout voir
+            </a>
+            <a href="{{ url_for('activity_listing', status=0) }}" class="secondary_nav__item {% if status == 0 %}secondary_nav__item--active{% endif %}">
+                Entrees
+            </a>
+            <a href="{{ url_for('activity_listing', status=1) }}" class="secondary_nav__item {% if status == 1 %}secondary_nav__item--active{% endif %}">
+                Sortis
+            </a>
+        </nav>
+    {% endif %}
+    
+</header>

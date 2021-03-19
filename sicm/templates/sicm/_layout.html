@@ -3,94 +3,78 @@
 
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tableau D'administration</title>
+    <title>Tableau D'administration - {{title}}</title>
 
-    {% include "sicm/includes/css_includes.html" %}
+    {% include('sicm/includes/main_styles.html') %}
 
-    {% block custom_css %}{% endblock %}
-    
 </head>
 
-<body class="page-top">
+<body>
+    
+    {% include('sicm/sections/_header.html') %}
 
-    <!-- Page Wrapper -->
-    <div id="wrapper">
+    <main class="main">
 
-        {% include "sicm/sections/__sidenav.html" %}
+        <div class="main__header">
+            <h2 class="main__header__title">
+                {{ page_title.title() }}
+            </h2>
+            <nav class="main__header__breadcumb">
+               {% include "sicm/sections/breadcumb.html" %}
+            </nav>
+        </div>
 
-        <!-- Content Wrapper -->
-        <div id="content-wrapper" class="d-flex flex-column">
+        <div class="main__actions_menu">
 
-            <!-- Main Content -->
-            <div id="content">
+            <div class="primary_actions">
+                {% include "sicm/sections/primary_actions.html" %}
+            </div>
 
-                {% include "sicm/sections/__navbar.html" %}
+            <div class="secondary_actions">
+                {% include "sicm/sections/secondary_actions.html" %}
+            </div>
 
-                <!-- Begin Page Content -->
-                <div class="container-fluid">
-                    <div class="row">
-                        <div class="col">
-                            {% for category, message in get_flashed_messages(with_categories=true) %}
-                                <span class="alert alert-{{ category }}">{{ message }}</span>
-                            {% endfor %}
-                        </div>
-                    </div>
-                    <hr class="divider">
-                    
-                    {% block content %}{% endblock %}
+        </div>
 
-                </div>
-                <!-- /.container-fluid -->
+        <div class="main__body">
+
+            <div class="main__body__content">
+
+                {% block main_body  %}
+                {% endblock %}
 
             </div>
 
-            <!-- Footer -->
-            <footer class="sticky-footer bg-white">
-                <div class="container my-auto">
-                    <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; IUT 2020</span>
+
+            <div class="main__body__sidenav">
+
+                {% block sidenav_content %}
+                
+                    <div class="info_table">
+                        {% for key in details %}
+                            <div class="info_table__row">
+                                <div class="info_table__row__title">{{ ' '.join(key.split('_')).title() }}</div>
+                                <div class="info_table__row__value">{{details[key]}}</div>
+                            </div>
+                        {% endfor %}
                     </div>
-                </div>
-            </footer>
-            <!-- End of Footer -->
 
-        </div>
-        <!-- end of content wrapper -->
+                {% endblock %}
 
-    </div>
-    <!-- End of Page Wrapper -->
-
-    <!-- Scroll to Top Button-->
-    <a class="scroll-to-top rounded" href="#page-top">
-        <i class="fas fa-angle-up"></i>
-    </a>
-
-    <!-- Logout Modal-->
-    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Se deconnnecter ?</h5>
-                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    Etes vous sure de vouloir vous deconnecter ?
-                </div>
-                <div class="modal-footer">
-                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Non</button>
-                    <a class="btn btn-primary" href="{{url_for('logout')}}">Oui</a>
-                </div>
             </div>
+
         </div>
-    </div>
 
-    {% include "sicm/includes/js_includes.html" %}
 
-    {% block custom_js %}{% endblock %}
+    </main>
+
+    <footer class="footer">
+        Copyright &copy; Institut Universitaire des Technologies - DOUALA, Tous droits réservés.
+    </footer>
+
+    <script src="{{url_for('static', filename='js/dashboard.js')}}"></script>
 
 </body>
 

@@ -1,96 +1,49 @@
 {% extends "sicm/_layout.html" %}
 
-{% block content %}
+{% from 'sicm/macros/utils.html' import generate_table_head %}
+{% from 'sicm/macros/utils.html' import generate_table_body %}
 
-<div class="row">
+{% block main_body %}
 
-    <div class="col-12">
-
-        <div class="card shadow">
-            <div class="card-header">
-                <span>Terminals enregistres</span>
+    <div class="collapsable" id="newForm">
+        <form action="" class="form form--inline" method="POST">
+            <div class="form__control">
+                <label for="matricule">Matricule</label>
+                <input type="text" name="matricule" id="matricule">
             </div>
-            <div class="card-body">
-                
-                <div class="options">
-                    <button data-toggle="modal" data-target="#add_terminal" class="btn btn-sm btn-primary">
-                        <i class="fa fa-plus"></i>
-                        Ajouter
-                    </button>
-                </div>
-
-                <hr class="divider">
-
-                <div class="table-responsive">
-                    <table class="table table-sm table-striped table-hover" id="dataTable">
-                        <thead>
-                            <tr>
-                                <th>Matricules</th>
-                                <th>Emplacements</th>
-                                <th>Dates D'ajout</th>
-                                <th>Options</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {% for item in data %}
-                            <tr>
-                                <td>{{item.matricule}}</td>
-                                <td>{{item.location}}</td>
-                                <td>{{item.created_on.strftime('%d/%m/%Y')}}</td>
-                                <td>
-                                    <a href="{{ url_for('delete_terminal', matricule=item.matricule) }}" class="text-danger">
-                                        <small>retirer</small>
-                                    </a>
-                                </td>
-                            </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
-                </div>
+            <div class="form__control">
+                <label for="location">Emplacement</label>
+                <input type="text" name="location" id="location">
             </div>
-        </div>
-
+            <div class="form__control">
+                <button class="button button--primary">Ajouter</button>
+            </div>
+        </form>
     </div>
 
-</div>
+    <table class="datatable" id="dataTable" cellspacing="0">
 
-<div class="modal fade" id="add_terminal" tabindex="-1" role="dialog" aria-labelledby="addTerminaleModal"
-    aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="addEmployeeModal">Ajouter un terminale</h5>
-                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">×</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form action="" method="POST">
-                    <div class="form-group">
-                        <label for="matricule">Matricule</label>
-                        <input type="text" class="form-control" name="matricule" id="matricule">
-                    </div>
-                    <div class="form-group">
-                        <label for="prenom">Emplacement</label>
-                        <input type="text" class="form-control" name="location" id="location">
-                    </div>
-                    <div class="form-group">
-                        <button class="btn w-100 btn-primary">Ajouter</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
+        <thead>
+            {% if data[0] %}
+                <tr>
+                    {{ generate_table_head(data[0]) }}
+                </tr>
+            {% endif %}
+        </thead>
+
+        <tbody>
+            
+            {{ generate_table_body(data, withOptions=True, options=[['delete_terminal', 'minus-circle']]) }}
+
+        </tbody>
+    </table>
+
+    <!-- {% include "sicm/sections/pagination.html" %} -->
 
 {% endblock %}
 
-{% block custom_js %}
-<script src="{{ url_for('static', filename='vendor/datatables/jquery.dataTables.min.js') }}"></script>
-<script src="{{ url_for('static', filename='vendor/datatables/dataTables.bootstrap4.min.js') }}"></script>
-<script>
-    $(document).ready(function () {
-        $('#dataTable').DataTable();
-    });
-</script>
+{% block sidenav_content %}
+
+
+
 {% endblock %}

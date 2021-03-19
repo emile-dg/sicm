@@ -1,0 +1,39 @@
+<!-- to generate the head of a table from a dictionary -->
+{% macro generate_table_head(item) %}
+    {% if item %}
+        {% for key in item %}
+            <th>{{ " ".join(key.split('_')).capitalize() }}s</th>
+        {% endfor %}
+    {% endif %}
+{% endmacro %}
+
+<!-- to generate the content of the table from a dictionary -->
+{% macro generate_table_body(data, withOptions=False, options=[]) %}
+    {% if data %}
+        {% for row in data %}
+            <tr role="row">
+                {% for ck, col in row.items() %}
+                    <td>{{ col }}</td>
+                {% endfor %}
+                {% if withOptions == True %}
+                    <td class="actions">
+                        {% for option in options %}
+                            <!--  options = [[0:url to action, 1:the icon to display]]  -->
+                            <a href="{{ url_for(option[0], matricule=row.matricule) }}" class="action" style="color: red;">
+                                <i class="icofont-{{option[1]}}"></i>
+                            </a>
+                        {% endfor %}
+                    </td>
+                {% endif %}
+            </tr>
+        {% endfor %}
+    {% else %}
+        <tr>
+            <td>
+                <p style="text-align: center;">
+                    Rien a afficher
+                </p>
+            </td>
+        </tr>
+    {% endif %}
+{% endmacro %}

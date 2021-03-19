@@ -1,0 +1,85 @@
+{% extends "sicm/_layout.html" %}
+
+{% block content %}
+
+<div class="row">
+    <div class="col-12">
+        <div class="card border-0">
+            <div class="card-body">
+                <h2 class="text-primary text-capitalize">
+                    Bienvenue, {{current_user.first_name}} {{current_user.last_name}}
+                </h2>
+                <span>
+                    Outil de gestion et d'administration du 
+                    systeme d'identification et d'enregistrement 
+                    de access aux batiments de l'IUT.
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-2">
+
+    <div class="col-12">
+
+        <div class="row">
+
+            <div class="col-12">
+                <div class="card shadow">
+                    <div class="card-header">
+                        <span>Briefing d'access du jour</span>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-sm table-striped table-hover" id="dataTable">
+                                <thead>
+                                    <tr>
+                                        <th>IDs</th>
+                                        <th>Prenoms</th>
+                                        <th>Noms</th>
+                                        <th>Heures</th>
+                                        <th>Terminaux</th>
+                                        <th>Activites</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for item in data %}
+                                    <tr>
+                                        <td>{{item.id}}</td>
+                                        <td>{{item.first_name}}</td>
+                                        <td>{{item.last_name}}</td>
+                                        <td>{{item.time}}</td>
+                                        <td>{{item.location}}</td>
+                                        <td>{{item.status}}</td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="card-footer">
+                        <small><a href="{{ url_for('activity_listing') }}">Tout voir &gt;&gt;</a></small>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}
+
+{% block custom_js %}
+<script src="{{ url_for('static', filename='vendor/datatables/jquery.dataTables.min.js') }}"></script>
+<script src="{{ url_for('static', filename='vendor/datatables/dataTables.bootstrap4.min.js') }}"></script>
+<script>
+    $(document).ready(function () {
+        $('#dataTable').DataTable();
+    });
+</script>
+{% endblock %}

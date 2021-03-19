@@ -1,0 +1,75 @@
+{% extends "sicm/_layout.html" %}
+
+{% block content %}
+
+<div class="row">
+
+    <div class="col-12">
+
+        <div class="card shadow">
+            <div class="card-header">
+                <span>Activites</span>
+            </div>
+            <div class="card-body">
+
+                <div class="row">
+                    <div class="col-3">
+                        <form action="" method="POST">
+                            <div class="form-group">
+                                <label for="date">Choisir une date</label>
+                                <input type="date" class="form-control" name="date" id="date">
+                            </div>
+                            <div class="form-group">
+                                <button class="btn btn-sm btn-primary">Afficher</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="table-responsive">
+                    <table class="table table-sm table-striped table-hover" id="dataTable">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Prenoms</th>
+                                <th>Noms</th>
+                                <th>Dates</th>
+                                <th>Heures</th>
+                                <th>Emplacements</th>
+                                <th>Activites</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for item in data %}
+                            <tr>
+                                <td>{{item.id}}</td>
+                                <td>{{item.first_name}}</td>
+                                <td>{{item.last_name}}</td>
+                                <td>{{item.date.strftime('%d/%m/%Y')}}</td>
+                                <td>{{item.date.strftime('%H:%M')}}</td>
+                                <td>{{item.location}}</td>
+                                <td>{{item.status}}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}
+
+{% block custom_js %}
+<script src="{{ url_for('static', filename='vendor/datatables/jquery.dataTables.min.js') }}"></script>
+<script src="{{ url_for('static', filename='vendor/datatables/dataTables.bootstrap4.min.js') }}"></script>
+<script>
+    $(document).ready(function () {
+        $('#dataTable').DataTable();
+    });
+</script>
+{% endblock %}

@@ -1,0 +1,20 @@
+{% if page_index != 0 %}
+
+    {% if page_index != 3 %}
+        <button class="button button--primary button--special collapse-action" data-collapse-target="#newForm">
+            <i class="icofont-plus"></i>
+            <span>Nouveau</span>
+        </button>
+    {% endif %}
+
+    <a class="button button--secondary button--special" href="?export=True">
+        <i class="icofont-upload-alt"></i>
+        <span>Exporter</span>
+    </a>
+
+    <button class="button button--secondary button--special">
+        <i class="icofont-print"></i>
+        <span>Imprimer</span>
+    </button>
+
+{% endif %}

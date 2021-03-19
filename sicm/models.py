@@ -24,6 +24,18 @@ class Employee(db.Model):
     def full_name(self):
         return " ".join((self.first_name.capitalize(), self.last_name.upper()))
 
+    def json(self, with_activities=False):
+        data = {
+            'matricule': self.matricule,
+            'prenom': self.first_name,
+            'nom': self.last_name,
+            'dates_d\'ajout': self.created_on.date(),
+        }
+        if with_activities:
+            data['activities'] = [i.json() for i in self.activties]
+
+        return data
+
 
 class Terminal(db.Model):
     matricule = db.Column(db.String(10), primary_key=True)
@@ -34,6 +46,17 @@ class Terminal(db.Model):
 
     def __repr__(self):
         return f"<Terminal {self.matricule}>"
+        
+    def json(self, with_activities=False):
+        data = {
+            'matricule': self.matricule,
+            'emplacement': self.location,
+            'dates_d\'ajout': self.created_on.date(),
+        }
+        if with_activities:
+            data['activities'] = [i.json() for i in self.activties]
+
+        return data
 
 
 class Admin(db.Model, UserMixin):
@@ -63,9 +86,11 @@ class Activity(db.Model):
     def json(self):
         return {
             'id': self.id, 
-            'date': self.date,
-            'status': 'entre' if self.status == 0 else 'sorti',
-            'first_name': self.employee.first_name,
-            'last_name': self.employee.last_name,
-            'location': self.terminal.location
+            'matricule': self.employee_matricule,
+            'prenom': self.employee.first_name,
+            'nom': self.employee.last_name,
+            'emplacement': self.terminal.location,
+            'statut': 'entre' if self.status == 0 else 'sorti',
+            'date': str(self.date.date()),
+            'heur': self.date.strftime('%H:%M:%S')
         }
